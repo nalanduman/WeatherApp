@@ -13,6 +13,10 @@ class HomeViewModel {
     
     var delegate: HomeViewModelDelegate?
     
+    var showLoading: CallbackResponse<Bool>?
+    var showWeatherData: CallbackResponse<WeatherData>?
+    var showError: VoidCallback?
+    
     init(service: WeatherDataServiceProtocol) {
         self.service = service
     }
@@ -20,11 +24,9 @@ class HomeViewModel {
     private func notify(output: HomeViewModelOutput) {
         delegate?.handleViewModelOutput(output: output)
     }
-}
-
-extension HomeViewModel: HomeViewModelProtocol {
+    
     func loadWeather(lat: Double? = 0, lon: Double? = 0, q: String? = "") {
-        notify(output: .setLoading(true))
+        showLoading?(true)
         
         var params: Parameters = .init()
         params[Constants.ParameterKeys.lat] = lat
@@ -33,11 +35,11 @@ extension HomeViewModel: HomeViewModelProtocol {
         
         service.getWeatherData(params: params) { [weak self] response in
             guard let self = self else { return }
-            notify(output: .setLoading(false))
+            showLoading?(false)
             if let response = response {
-                notify(output: .showWeatherData(response))
+                showWeatherData?(response)
             } else {
-                notify(output: .error)
+                showError?()
             }
         }
     }

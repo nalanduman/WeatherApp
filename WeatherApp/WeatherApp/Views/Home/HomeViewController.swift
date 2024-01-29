@@ -14,14 +14,20 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var unitLabel: UILabel!
+    @IBOutlet weak var unitSegmentedControl: UISegmentedControl!
     
     let locationManager = CLLocationManager()
-    
-    var viewModel: HomeViewModelProtocol? {
+    var weatherData: WeatherData? {
         didSet {
-            viewModel?.delegate = self
+            guard let weatherData = weatherData else { return }
+            setView(weatherData)
         }
     }
+    
+    lazy var viewModel: HomeViewModel = {
+        return HomeViewModel(service: app.weatherService)
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +38,38 @@ class HomeViewController: BaseViewController {
         searchTextField.delegate = self
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
-//        locationManager.startUpdatingLocation()
         locationManager.requestLocation()
+        unitSegmentedControl.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
+        initView()
+    }
+    
+    private func initView() {
+        viewModel.showWeatherData = { [weak self] response in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                if let response = response {
+                    self.weatherData = response
+                }
+            }
+        }
+        
+        viewModel.showLoading = { [weak self] isLoading in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                if isLoading ?? false {
+                    self.startAnimate()
+                } else {
+                    self.stopAnimate()
+                }
+            }
+        }
+        
+        viewModel.showError = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                print("ERROR")
+            }
+        }
     }
     
     @IBAction func searchPressed(_ sender: Any) {
@@ -42,6 +78,28 @@ class HomeViewController: BaseViewController {
     
     @IBAction func locationPressed(_ sender: UIButton) {
         locationManager.requestLocation()
+    }
+    
+    private func setView(_ weather: WeatherData) {
+        self.cityLabel.text = weather.name
+        self.temperatureLabel.text = unitSegmentedControl.selectedSegmentIndex == 0 ? weather.main?.fahrenheitString : weather.main?.celsiusString
+        self.conditionImageView.image = UIImage(systemName: weather.weather?.first?.conditionName ?? "")
+    }
+    
+    @objc func valueChanged(_ sender: UISegmentedControl) {
+        let selectedIndex = sender.selectedSegmentIndex
+        switch selectedIndex {
+        case 0:
+            self.unitLabel.text = "F"
+            self.temperatureLabel.text = weatherData?.main?.fahrenheitString
+            break
+        case 1:
+            self.unitLabel.text = "C"
+            self.temperatureLabel.text = weatherData?.main?.celsiusString
+            break
+        default:
+            break
+        }
     }
 }
 
@@ -62,7 +120,7 @@ extension HomeViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let city = searchTextField.text {
-            viewModel?.loadWeather(lat: 0, lon: 0, q: city)
+            viewModel.loadWeather(lat: 0, lon: 0, q: city)
         }
         searchTextField.text = ""
     }
@@ -74,32 +132,11 @@ extension HomeViewController: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
-            viewModel?.loadWeather(lat: lat, lon: lon, q: "")
+            viewModel.loadWeather(lat: lat, lon: lon, q: "")
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
-    }
-}
-
-extension HomeViewController: HomeViewModelDelegate {
-    func handleViewModelOutput(output: HomeViewModelOutput) {
-        DispatchQueue.main.async {
-            switch output {
-            case .setLoading(let isLoading):
-                if isLoading {
-                    self.startAnimate()
-                } else {
-                    self.stopAnimate()
-                }
-            case .showWeatherData(let weather):
-                self.cityLabel.text = weather.name
-                self.temperatureLabel.text = weather.main?.temperatureString
-                self.conditionImageView.image = UIImage(systemName: weather.weather?.first?.conditionName ?? "")
-            case .error:
-                break
-            }
-        }
     }
 }

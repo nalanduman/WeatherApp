@@ -46,9 +46,15 @@ struct Main: Codable {
         case pressure, humidity
     }
     
-    var temperatureString: String {
+    var fahrenheitString: String {
         guard let temp = temp else { return "" }
         return String(format: "%.1f", temp)
+    }
+    
+    var celsiusString: String {
+        guard let temp = temp else { return "" }
+        let celsius = (temp - 32) * 5/9
+        return String(format: "%.1f", celsius)
     }
 }
 

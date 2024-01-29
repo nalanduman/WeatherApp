@@ -14,5 +14,6 @@ class Constants {
         static let lon = "lon"
         static let appID = "appid"
         static let q = "q"
+        static let units = "units"
     }
 }

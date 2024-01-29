@@ -18,6 +18,7 @@ class WeatherDataService: BaseService, WeatherDataServiceProtocol {
         dataRequest.method = .get
         var parameters: Parameters = params
         parameters[Constants.ParameterKeys.appID] = appID
+        parameters[Constants.ParameterKeys.units] = "imperial"
         dataRequest.params = parameters
         
         networking.request(with: dataRequest.getUrlRequest(with: ApiEndpoint.weather.rawValue), showLogs: true) { (result: Result<WeatherData>) in

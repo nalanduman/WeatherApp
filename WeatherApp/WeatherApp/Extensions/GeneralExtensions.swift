@@ -8,7 +8,7 @@
 import Foundation
 
 extension Encodable {
-    public var data: Data? {
+    var data: Data? {
         get {
             return try? JSONEncoder().encode(self)
         }
@@ -16,7 +16,7 @@ extension Encodable {
 }
 
 extension Data {
-    public var prettyPrintedJSONString: NSString? {
+    var prettyPrintedJSONString: NSString? {
         guard let jsonObject = try? JSONSerialization.jsonObject(with: self, options: []),
               let data = try? JSONSerialization.data(withJSONObject: jsonObject,
                                                      options: [.prettyPrinted]),
@@ -28,7 +28,7 @@ extension Data {
     }
 }
 
-public extension CustomStringConvertible where Self: Codable {
+extension CustomStringConvertible where Self: Codable {
     var description: String {
         var description = "\n \(type(of: self)) \n"
         let selfMirror = Mirror(reflecting: self)

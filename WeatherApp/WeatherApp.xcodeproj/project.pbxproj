@@ -10,7 +10,6 @@
 		335646652B67D1FC003C285C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335646642B67D1FC003C285C /* AppDelegate.swift */; };
 		335646672B67D1FC003C285C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335646662B67D1FC003C285C /* SceneDelegate.swift */; };
 		335646692B67D1FC003C285C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 335646682B67D1FC003C285C /* BaseViewController.swift */; };
-		3356466C2B67D1FC003C285C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3356466A2B67D1FC003C285C /* Main.storyboard */; };
 		3356466E2B67D1FE003C285C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3356466D2B67D1FE003C285C /* Assets.xcassets */; };
 		335646712B67D1FE003C285C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3356466F2B67D1FE003C285C /* LaunchScreen.storyboard */; };
 		3356467C2B67D5AD003C285C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3356467A2B67D5AD003C285C /* HomeViewController.swift */; };
@@ -49,7 +48,6 @@
 		335646642B67D1FC003C285C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		335646662B67D1FC003C285C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		335646682B67D1FC003C285C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		3356466B2B67D1FC003C285C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3356466D2B67D1FE003C285C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		335646702B67D1FE003C285C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		335646722B67D1FE003C285C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 				335646872B67DD75003C285C /* Service */,
 				335646842B67DCF4003C285C /* Model */,
 				335646782B67D597003C285C /* Views */,
-				3356466A2B67D1FC003C285C /* Main.storyboard */,
 				3356466D2B67D1FE003C285C /* Assets.xcassets */,
 				3356466F2B67D1FE003C285C /* LaunchScreen.storyboard */,
 				335646722B67D1FE003C285C /* Info.plist */,
@@ -162,9 +159,9 @@
 		335646872B67DD75003C285C /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				3356469D2B67E438003C285C /* BaseService.swift */,
 				335646992B67E3F1003C285C /* Request */,
 				3356469C2B67E424003C285C /* NetworkService */,
-				3356469D2B67E438003C285C /* BaseService.swift */,
 				3356469F2B67E463003C285C /* ServiceProtocol */,
 				335646A02B67E473003C285C /* ServiceImplementation */,
 			);
@@ -335,7 +332,6 @@
 				335646712B67D1FE003C285C /* LaunchScreen.storyboard in Resources */,
 				3356467F2B67D79A003C285C /* Home.storyboard in Resources */,
 				3356466E2B67D1FE003C285C /* Assets.xcassets in Resources */,
-				3356466C2B67D1FC003C285C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,14 +379,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3356466A2B67D1FC003C285C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3356466B2B67D1FC003C285C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3356466F2B67D1FE003C285C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -454,7 +442,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -511,7 +499,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

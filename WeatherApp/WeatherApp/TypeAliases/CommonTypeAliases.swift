@@ -13,3 +13,4 @@ typealias HeaderParameters = [String : String]
 
 // MARK: - Closures
 typealias CallbackResponse<T> = (_ resp: T?) -> Void
+typealias VoidCallback = (() -> Void)
