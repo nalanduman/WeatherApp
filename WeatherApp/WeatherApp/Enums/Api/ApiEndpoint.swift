@@ -9,4 +9,5 @@ import Foundation
 
 enum ApiEndpoint: String {
     case weather = "weather"
+    case forecast = "forecast"
 }

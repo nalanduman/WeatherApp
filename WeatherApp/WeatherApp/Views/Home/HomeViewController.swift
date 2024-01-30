@@ -10,14 +10,21 @@ import CoreLocation
 
 class HomeViewController: BaseViewController {
 
-    @IBOutlet weak var conditionImageView: UIImageView!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var searchTextField: UITextField!
-    @IBOutlet weak var unitLabel: UILabel!
-    @IBOutlet weak var unitSegmentedControl: UISegmentedControl!
+    @IBOutlet weak private var conditionImageView: UIImageView!
+    @IBOutlet weak private var temperatureLabel: UILabel!
+    @IBOutlet weak private var cityLabel: UILabel!
+    @IBOutlet weak private var searchTextField: UITextField!
+    @IBOutlet weak private var unitLabel: UILabel!
+    @IBOutlet weak private var unitSegmentedControl: UISegmentedControl!
+    @IBOutlet weak private var weatherListTableView: UITableView!
     
     let locationManager = CLLocationManager()
+    var weatherList: WeatherList? {
+        didSet {
+            guard let weatherList = weatherList else { return }
+            reloadTableView()
+        }
+    }
     var weatherData: WeatherData? {
         didSet {
             guard let weatherData = weatherData else { return }
@@ -35,6 +42,7 @@ class HomeViewController: BaseViewController {
     }
     
     private func setup() {
+        configureTableView()
         searchTextField.delegate = self
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -47,9 +55,15 @@ class HomeViewController: BaseViewController {
         viewModel.showWeatherData = { [weak self] response in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                if let response = response {
-                    self.weatherData = response
-                }
+                self.weatherData = response
+                
+            }
+        }
+        
+        viewModel.showWeatherList = { [weak self] response in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.weatherList = response
             }
         }
         
@@ -80,13 +94,31 @@ class HomeViewController: BaseViewController {
         locationManager.requestLocation()
     }
     
+    private func configureTableView() {
+        weatherListTableView.delegate = self
+        weatherListTableView.dataSource = self
+        registerTableViewNibs()
+    }
+        
+    private func registerTableViewNibs() {
+        weatherListTableView.register(UINib(nibName: "WeatherTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "WeatherTableViewCell")
+    }
+        
+    private func reloadTableView() {
+        DispatchQueue.main.async {
+            self.weatherListTableView.reloadData()
+        }
+    }
+    
     private func setView(_ weather: WeatherData) {
-        self.cityLabel.text = weather.name
-        self.temperatureLabel.text = unitSegmentedControl.selectedSegmentIndex == 0 ? weather.main?.fahrenheitString : weather.main?.celsiusString
-        self.conditionImageView.image = UIImage(systemName: weather.weather?.first?.conditionName ?? "")
+        cityLabel.text = weather.name
+        temperatureLabel.text = unitSegmentedControl.selectedSegmentIndex == 0 ? weather.main?.fahrenheitString : weather.main?.celsiusString
+        unitLabel.text = unitSegmentedControl.titleForSegment(at: unitSegmentedControl.selectedSegmentIndex)
+        conditionImageView.image = UIImage(systemName: weather.weather?.first?.conditionName ?? "")
     }
     
     @objc func valueChanged(_ sender: UISegmentedControl) {
+        reloadTableView()
         let selectedIndex = sender.selectedSegmentIndex
         switch selectedIndex {
         case 0:
@@ -120,9 +152,14 @@ extension HomeViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let city = searchTextField.text {
-            viewModel.loadWeather(lat: 0, lon: 0, q: city)
+            loadWeather(lat: 0, lon: 0, q: city)
         }
         searchTextField.text = ""
+    }
+    
+    func loadWeather(lat: Double? = 0, lon: Double? = 0, q: String? = "") {
+        viewModel.loadWeather(lat: lat, lon: lon, q: q)
+        viewModel.loadWeatherList(lat: lat, lon: lon, q: q)
     }
 }
 
@@ -132,11 +169,27 @@ extension HomeViewController: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let lon = location.coordinate.longitude
-            viewModel.loadWeather(lat: lat, lon: lon, q: "")
+            loadWeather(lat: lat, lon: lon, q: "")
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+    }
+}
+
+extension HomeViewController: UITableViewDelegate {
+    
+}
+
+extension HomeViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return weatherList?.dailyList.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherTableViewCell", for: indexPath) as? WeatherTableViewCell else { return UITableViewCell() }
+        cell.configure(weatherList?.dailyList[indexPath.row], selectedSegmentIndex: unitSegmentedControl.selectedSegmentIndex)
+        return cell
     }
 }
