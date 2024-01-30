@@ -8,10 +8,17 @@
 import Foundation
 
 extension Int {
-    var date: String {
+    var getDate: String {
         let date = Date(timeIntervalSince1970: TimeInterval(self))
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: date)
+    }
+    
+    var getTime: String {
+        let date = Date(timeIntervalSince1970: TimeInterval(self))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: date)
     }
     
@@ -28,5 +35,9 @@ extension Int {
             dateFormatter.dateFormat = "EEEE"
             return dateFormatter.string(from: date)
         }
+    }
+    
+    func toString() -> String {
+        return String(self)
     }
 }

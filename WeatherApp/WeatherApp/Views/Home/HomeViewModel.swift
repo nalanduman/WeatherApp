@@ -11,8 +11,6 @@ class HomeViewModel {
     
     private let service: WeatherDataServiceProtocol
     
-    var delegate: HomeViewModelDelegate?
-    
     var showLoading: CallbackResponse<Bool>?
     var showWeatherData: CallbackResponse<WeatherData>?
     var showWeatherList: CallbackResponse<WeatherList>?
@@ -20,10 +18,6 @@ class HomeViewModel {
     
     init(service: WeatherDataServiceProtocol) {
         self.service = service
-    }
-    
-    private func notify(output: HomeViewModelOutput) {
-        delegate?.handleViewModelOutput(output: output)
     }
     
     func loadWeather(lat: Double? = 0, lon: Double? = 0, q: String? = "") {

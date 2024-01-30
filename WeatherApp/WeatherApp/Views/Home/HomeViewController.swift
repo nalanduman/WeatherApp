@@ -179,7 +179,19 @@ extension HomeViewController: CLLocationManagerDelegate {
 }
 
 extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "WeatherDetailViewController", sender: indexPath.row)
+    }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "WeatherDetailViewController" {
+            if let vc = segue.destination as? WeatherDetailViewController, let selectedIndex = sender as? Int {
+                vc.list = weatherList?.list?.filter({ $0.formattedDate == weatherList?.dailyList[selectedIndex].formattedDate }) 
+                vc.weatherList = weatherList
+                vc.selectedUnit = unitSegmentedControl.selectedSegmentIndex
+            }
+        }
+    }
 }
 
 extension HomeViewController: UITableViewDataSource {

@@ -59,12 +59,17 @@ struct List: Codable {
     
     var formattedDate: String {
         guard let dt = dt else { return "" }
-        return dt.date
+        return dt.getDate
     }
     
     var formattedDay: String {
         guard let dt = dt else { return "" }
         return dt.getDay
+    }
+    
+    var formattedTime: String {
+        guard let dt = dt else { return "" }
+        return dt.getTime
     }
 }
 
