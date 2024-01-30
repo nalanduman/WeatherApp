@@ -21,10 +21,10 @@ extension Int {
         let inputDate = Calendar.current.dateComponents([.year, .month, .day], from: date)
         
         if today == inputDate {
-            return "Bugün"
+            return "Today"
         } else {
             let dateFormatter = DateFormatter()
-            dateFormatter.locale = Locale(identifier: "tr_TR")
+            dateFormatter.locale = Locale(identifier: "en_EN")
             dateFormatter.dateFormat = "EEEE"
             return dateFormatter.string(from: date)
         }

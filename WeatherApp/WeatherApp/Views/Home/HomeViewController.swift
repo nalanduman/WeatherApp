@@ -21,7 +21,7 @@ class HomeViewController: BaseViewController {
     let locationManager = CLLocationManager()
     var weatherList: WeatherList? {
         didSet {
-            guard let weatherList = weatherList else { return }
+            guard weatherList != nil else { return }
             reloadTableView()
         }
     }
@@ -101,7 +101,7 @@ class HomeViewController: BaseViewController {
     }
         
     private func registerTableViewNibs() {
-        weatherListTableView.register(UINib(nibName: "WeatherTableViewCell", bundle: Bundle.main), forCellReuseIdentifier: "WeatherTableViewCell")
+        weatherListTableView.registerNib(WeatherTableViewCell.self)
     }
         
     private func reloadTableView() {
@@ -188,7 +188,7 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherTableViewCell", for: indexPath) as? WeatherTableViewCell else { return UITableViewCell() }
+        let cell = tableView.dequeue(WeatherTableViewCell.self, for: indexPath)
         cell.configure(weatherList?.dailyList[indexPath.row], selectedSegmentIndex: unitSegmentedControl.selectedSegmentIndex)
         return cell
     }
