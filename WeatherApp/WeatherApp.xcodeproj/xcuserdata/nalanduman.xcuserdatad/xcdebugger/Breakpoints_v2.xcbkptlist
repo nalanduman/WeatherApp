@@ -225,6 +225,21 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "FCC7FDD6-B9AE-4B3E-8E88-C8DCDD5EBDCC - 94928ff408d5a85a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "WeatherApp.HomeViewController.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "WeatherApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nalanduman/Documents/GitHub/WeatherApp/WeatherApp/WeatherApp/Views/Home/HomeViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "192"
+                  endingLineNumber = "192"
+                  offsetFromSymbolStart = "488">
+               </Location>
+               <Location
                   uuid = "FCC7FDD6-B9AE-4B3E-8E88-C8DCDD5EBDCC - 3e8f298045ef142f"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
@@ -237,7 +252,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "189"
                   endingLineNumber = "189"
-                  offsetFromSymbolStart = "968">
+                  offsetFromSymbolStart = "1016">
                </Location>
                <Location
                   uuid = "FCC7FDD6-B9AE-4B3E-8E88-C8DCDD5EBDCC - f2ebec7ac8891bfe"
@@ -253,6 +268,54 @@
                   startingLineNumber = "189"
                   endingLineNumber = "189"
                   offsetFromSymbolStart = "84">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2DEE0023-EBC9-4CE0-9A8D-6C8BA93930CF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeatherApp/Views/WeatherDetail/WeatherDetailViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2DEE0023-EBC9-4CE0-9A8D-6C8BA93930CF - 993604481bde3a6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "WeatherApp.WeatherDetailViewController.tableView(_: __C.UITableView, viewForHeaderInSection: Swift.Int) -&gt; Swift.Optional&lt;__C.UIView&gt;"
+                  moduleName = "WeatherApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nalanduman/Documents/GitHub/WeatherApp/WeatherApp/WeatherApp/Views/WeatherDetail/WeatherDetailViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "2DEE0023-EBC9-4CE0-9A8D-6C8BA93930CF - ceb744accdf6fa67"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "WeatherApp.WeatherDetailViewController.tableView(_: __C.UITableView, cellForRowAt: Foundation.IndexPath) -&gt; __C.UITableViewCell"
+                  moduleName = "WeatherApp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nalanduman/Documents/GitHub/WeatherApp/WeatherApp/WeatherApp/Views/WeatherDetail/WeatherDetailViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "81"
+                  endingLineNumber = "81"
+                  offsetFromSymbolStart = "7256">
                </Location>
             </Locations>
          </BreakpointContent>

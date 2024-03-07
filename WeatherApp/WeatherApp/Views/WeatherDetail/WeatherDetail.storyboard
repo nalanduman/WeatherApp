@@ -13,7 +13,7 @@
         <!--Weather Detail View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="WeatherDetailViewController" interactionActivityTrackingBaseName="WeatherDetailViewController" id="Y6W-OH-hqX" customClass="WeatherDetailViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WeatherDetailViewController" interactionActivityTrackingBaseName="WeatherDetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="WeatherDetailViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -36,8 +36,15 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zs0-32-S5a">
+                                                <rect key="frame" x="0.0" y="86" width="393" height="32"/>
+                                                <segments>
+                                                    <segment title="F"/>
+                                                    <segment title="C"/>
+                                                </segments>
+                                            </segmentedControl>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Qze-8w-zB7">
-                                                <rect key="frame" x="0.0" y="86" width="393" height="756"/>
+                                                <rect key="frame" x="0.0" y="127" width="393" height="715"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                             </tableView>
@@ -68,20 +75,22 @@
                             <constraint firstItem="yQz-Dj-EPJ" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="xV7-ns-Wis"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="WPz-b9-F3X"/>
                     <connections>
                         <outlet property="cityLabel" destination="ah2-gu-FIv" id="4RI-3h-gnf"/>
                         <outlet property="dayLabel" destination="A2R-EC-pQi" id="3hk-jV-Mwc"/>
                         <outlet property="detailTableView" destination="Qze-8w-zB7" id="ir6-tX-rmx"/>
+                        <outlet property="unitSegmentedControl" destination="zs0-32-S5a" id="vDd-ni-1ho"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140" y="-2"/>
+            <point key="canvasLocation" x="1066.4122137404579" y="-2.1126760563380285"/>
         </scene>
     </scenes>
     <resources>
         <namedColor name="mainColor">
-            <color red="0.23921570180000001" green="0.38823530080000002" blue="0.40784314269999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.23899999260902405" green="0.3880000114440918" blue="0.40799999237060547" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

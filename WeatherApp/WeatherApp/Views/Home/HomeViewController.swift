@@ -188,6 +188,7 @@ extension HomeViewController: UITableViewDelegate {
             if let vc = segue.destination as? WeatherDetailViewController, let selectedIndex = sender as? Int {
                 vc.list = weatherList?.list?.filter({ $0.formattedDate == weatherList?.dailyList[selectedIndex].formattedDate }) 
                 vc.weatherList = weatherList
+                vc.weatherDetailDelegate = self
                 vc.selectedUnit = unitSegmentedControl.selectedSegmentIndex
             }
         }
@@ -203,5 +204,14 @@ extension HomeViewController: UITableViewDataSource {
         let cell = tableView.dequeue(WeatherTableViewCell.self, for: indexPath)
         cell.configure(weatherList?.dailyList[indexPath.row], selectedSegmentIndex: unitSegmentedControl.selectedSegmentIndex)
         return cell
+    }
+}
+
+extension HomeViewController: WeatherDetailViewControllerDelegate {
+    func updatedData(selectedUnit: Int?) {
+        if let selectedUnit = selectedUnit {
+            unitSegmentedControl.selectedSegmentIndex = selectedUnit
+            valueChanged(unitSegmentedControl)
+        }
     }
 }

@@ -7,11 +7,18 @@
 
 import UIKit
 
+protocol WeatherDetailViewControllerDelegate: AnyObject {
+    func updatedData(selectedUnit: Int?)
+}
+
 class WeatherDetailViewController: BaseViewController {
 
     @IBOutlet weak private var cityLabel: UILabel!
     @IBOutlet weak private var dayLabel: UILabel!
+    @IBOutlet weak var unitSegmentedControl: UISegmentedControl!
     @IBOutlet weak private var detailTableView: UITableView!
+    
+    weak var weatherDetailDelegate: WeatherDetailViewControllerDelegate?
     
     var list: [List]?
     var weatherList: WeatherList?
@@ -25,6 +32,7 @@ class WeatherDetailViewController: BaseViewController {
     private func setup() {
         configureTableView()
         configure()
+        unitSegmentedControl.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
     }
     
     private func configureTableView() {
@@ -49,6 +57,14 @@ class WeatherDetailViewController: BaseViewController {
         cityLabel.text = weatherList.city?.name
         dayLabel.text = "\(list.first?.formattedDate ?? "") (\(list.first?.formattedDay ?? ""))"
     }
+    
+    @objc func valueChanged(_ sender: UISegmentedControl) {
+        DispatchQueue.main.async {
+            self.reloadTableView()
+        }
+        selectedUnit = sender.selectedSegmentIndex
+        weatherDetailDelegate?.updatedData(selectedUnit: selectedUnit)
+    }
 }
 
 extension WeatherDetailViewController: UITableViewDataSource {
@@ -60,6 +76,7 @@ extension WeatherDetailViewController: UITableViewDataSource {
         let cell = tableView.dequeue(WeatherDetailTableViewCell.self, for: indexPath)
         let selectedList = list?[indexPath.row]
         let data: WeatherDetailModel = .init(date: selectedList?.formattedTime, temperature: selectedUnit == 0 ? selectedList?.main?.fahrenheitString : selectedList?.main?.celsiusString, speed: selectedList?.wind?.speed?.toString(), humidity: selectedList?.main?.humidity?.toString(), unit: selectedUnit == 0 ? "F" : "C")
+        cell.configureUnit(unit: selectedUnit == 0 ? .fahrenheit : .celcius, defaultUnit: data.unit ?? "")
         cell.configure(data)
         return cell
     }
